@@ -1,8 +1,1 @@
-# Ignore all files
-*
-
-# Unignore important shizzle
-!.gitignore
-!*.java
-!*.md
-!graph/*.java
+*.class
