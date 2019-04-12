@@ -42,7 +42,7 @@ public class ChineseRemainder{
      *
      * @return Returns x in the above algorithm.
      */
-    public static long solve(long a, long n, long b, long m){
+    public static long[] solve(long a, long n, long b, long m){
         long[] arr = extEuc(n,m); 
         BigInteger g = BigInteger.valueOf(arr[2]);
         BigInteger v = BigInteger.valueOf(arr[0]);
@@ -55,9 +55,26 @@ public class ChineseRemainder{
             BigInteger x = ab.multiply(u).multiply(mb).divide(g).add(bb.multiply(v).multiply(nb).divide(g));
             BigInteger k = mb.multiply(nb).divide(g); 
             x = x.mod(k);
-            return x.longValue();
+            long[] res = {x.longValue(), k.longValue()};
+            return res;
         } else {
-            return -1;
+            long[] res = {-1, -1};
+            return res;
         }
+    }
+
+    public static long[] solve(long[] a, long[] m){
+        long x = a[0];
+        long k = m[0];
+        long[] xk = {x,k};
+        for(int i = 1; i < a.length; ++i){
+            xk = solve(a[i], m[i], x, k);
+            x = xk[0];
+            k = xk[1];
+            if(x == -1){
+                return new long[]{-1,-1};
+            }
+        }
+        return xk;
     }
 }        
